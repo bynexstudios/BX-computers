@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Bynex PC Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="antialiased relative min-h-screen flex flex-col">
+    <div class="cyber-grid fixed"></div>
+
+    <nav class="glass-nav fixed w-full z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-center">
+            <a href="index.html" class="font-heading font-black text-2xl tracking-tight text-white">BYNEX<span class="text-sky-400">PC</span> Checkout</a>
+        </div>
+    </nav>
+
+    <main class="flex-grow pt-32 pb-16 max-w-5xl mx-auto px-4 sm:px-6 w-full z-10 relative">
+        <div class="glass p-8 md:p-12 rounded-3xl">
+            <h1 class="text-3xl font-heading font-black mb-8 border-b border-slate-700 pb-4">Checkout</h1>
+            
+            <form onsubmit="event.preventDefault(); alert('Order Placed Successfully! (Mockup)'); window.location.href='index.html'; localStorage.removeItem('bynex_cart');" class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Billing Details -->
+                <div>
+                    <h2 class="text-xl font-bold mb-6 text-sky-400">Billing Details</h2>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-400 mb-1">First Name</label>
+                                <input type="text" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-400 mb-1">Last Name</label>
+                                <input type="text" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-400 mb-1">Email Address</label>
+                            <input type="email" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-400 mb-1">Phone Number</label>
+                            <input type="tel" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-400 mb-1">Street Address</label>
+                            <input type="text" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-400 mb-1">City</label>
+                                <input type="text" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-400 mb-1">Postal Code</label>
+                                <input type="text" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2.5 text-white focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div>
+                    <h2 class="text-xl font-bold mb-6 text-sky-400">Payment Method (Sri Lanka)</h2>
+                    <div class="space-y-4 mb-8">
+                        <label class="flex items-center gap-4 p-4 border border-slate-700 rounded-xl cursor-pointer hover:bg-slate-800 transition">
+                            <input type="radio" name="payment" value="cod" checked class="w-5 h-5 text-sky-500 bg-slate-900 border-slate-700 focus:ring-sky-500">
+                            <div>
+                                <div class="font-bold text-white">Cash on Delivery (COD)</div>
+                                <div class="text-xs text-slate-400">Pay with cash upon delivery.</div>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-4 p-4 border border-slate-700 rounded-xl cursor-pointer hover:bg-slate-800 transition">
+                            <input type="radio" name="payment" value="bank" class="w-5 h-5 text-sky-500 bg-slate-900 border-slate-700 focus:ring-sky-500">
+                            <div>
+                                <div class="font-bold text-white">Direct Bank Transfer</div>
+                                <div class="text-xs text-slate-400">Make your payment directly into our bank account.</div>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-4 p-4 border border-slate-700 rounded-xl cursor-pointer hover:bg-slate-800 transition">
+                            <input type="radio" name="payment" value="card" class="w-5 h-5 text-sky-500 bg-slate-900 border-slate-700 focus:ring-sky-500">
+                            <div>
+                                <div class="font-bold text-white">Credit / Debit Card</div>
+                                <div class="text-xs text-slate-400">Visa / Mastercard via secure gateway.</div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                        <h3 class="font-bold mb-4">Order Note</h3>
+                        <p class="text-sm text-slate-400 mb-6">Please ensure your contact number is active for delivery confirmation.</p>
+                        <button type="submit" class="w-full btn-primary py-4 rounded-xl font-bold text-lg">Place Order</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="border-t border-slate-800 bg-slate-950/80 py-8 text-center text-sm text-slate-500 relative z-10">
+        <div class="max-w-7xl mx-auto px-4">&copy; 2026 Bynex PC. All rights reserved.</div>
+    </footer>
+</body>
+</html>

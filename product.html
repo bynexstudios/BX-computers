@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Bynex PC Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0ea5e9',
+                        dark: '#0f172a',
+                        darker: '#020617',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased relative min-h-screen flex flex-col">
+    <div class="cyber-grid fixed"></div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav fixed w-full z-50 transition-all duration-300">
+        <!-- Exact same navbar structure for visual consistency (simplified here for demo) -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <a href="index.html" class="font-heading font-black text-2xl tracking-tight text-white">BYNEX<span class="text-sky-400">PC</span></a>
+                </div>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="cart.html" class="relative text-slate-300 hover:text-sky-400 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                        <span class="cart-count absolute -top-2 -right-2 bg-sky-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-slate-900 hidden">0</span>
+                    </a>
+                    <a href="login.html" class="text-slate-300 hover:text-white font-medium text-sm transition">Log in</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-32 pb-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10 relative" id="product-container">
+        <!-- Content will be injected here via JS -->
+        <div class="flex justify-center items-center h-64">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
+        </div>
+    </main>
+
+    <footer class="border-t border-slate-800 bg-slate-950/80 py-8 text-center text-sm text-slate-500 relative z-10">
+        <div class="max-w-7xl mx-auto px-4">&copy; 2026 Bynex PC. All rights reserved.</div>
+    </footer>
+
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = parseInt(urlParams.get('id'));
+            const container = document.getElementById('product-container');
+            
+            if(!productId || !window.db) return;
+            
+            const product = window.db.products.find(p => p.id === productId);
+            
+            if(product) {
+                document.title = `${product.name} | Bynex PC Hub`;
+                
+                let specsHtml = '';
+                if(product.specs && product.specs.length > 0) {
+                    specsHtml = `
+                        <h3 class="text-xl font-bold mb-4 border-b border-slate-700 pb-2">Specifications</h3>
+                        <ul class="space-y-3 mb-8">
+                            ${product.specs.map(spec => `
+                                <li class="flex items-center gap-3 text-slate-300">
+                                    <svg class="h-5 w-5 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    ${spec}
+                                </li>
+                            `).join('')}
+                        </ul>
+                    `;
+                }
+
+                container.innerHTML = `
+                    <div class="glass rounded-3xl p-6 md:p-10 flex flex-col lg:flex-row gap-12">
+                        <!-- Image Section -->
+                        <div class="lg:w-1/2">
+                            <div class="rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 relative aspect-square">
+                                <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover opacity-90 mix-blend-screen transition-transform duration-500 hover:scale-110">
+                            </div>
+                        </div>
+                        
+                        <!-- Details Section -->
+                        <div class="lg:w-1/2 flex flex-col justify-center">
+                            <div class="text-sky-400 font-semibold uppercase tracking-wider mb-2">${product.category}</div>
+                            <h1 class="text-3xl md:text-5xl font-heading font-black text-white mb-4">${product.name}</h1>
+                            
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="flex text-yellow-400">
+                                    ${'★'.repeat(product.rating)}${'☆'.repeat(5 - product.rating)}
+                                </div>
+                                <span class="text-slate-400 text-sm">(Customer Reviews)</span>
+                            </div>
+                            
+                            <div class="text-4xl font-bold text-white mb-2">${window.db.formatPrice(product.price)}</div>
+                            
+                            <div class="mb-8">
+                                ${product.inStock 
+                                    ? '<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-sm font-medium border border-emerald-500/20"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> In Stock</span>'
+                                    : '<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-sm font-medium border border-red-500/20"><span class="w-2 h-2 rounded-full bg-red-400"></span> Out of Stock</span>'
+                                }
+                            </div>
+                            
+                            ${specsHtml}
+                            
+                            <div class="flex gap-4 mt-auto">
+                                <button onclick="addToCart(${product.id})" ${!product.inStock ? 'disabled' : ''} class="flex-grow btn-primary py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `<div class="text-center py-20 text-2xl font-bold">Product not found. <br><a href="shop.html" class="text-sky-400 text-lg mt-4 inline-block">Go to Shop</a></div>`;
+            }
+        });
+    </script>
+</body>
+</html>
